@@ -256,8 +256,8 @@ server.get("/weather", new Response() {
     HashMap<String, String> map = new HashMap<>();
     map.put("location", "Munich");
     map.put("condition", "fair");
-    map.put("temprature", "32 °C");
-	  request.write(map);
+    map.put("temperature", "32 °C");
+    request.write(map);
   }
 });
 ```
