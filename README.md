@@ -26,7 +26,7 @@ TinyServer is perfect for embedding into your applications.
 First import the server library: `import net.metzweb.tinyserver.*;`  
 Now you are good to go and can setup the server:
 
-```
+```java
 // init server at port 8200
 TinyServer server = new TinyServer(8200);
 
@@ -91,7 +91,7 @@ To receive a particular parameter, pass its key into the
 
 Example usage: `/hello?name=Christian`
 
-```
+```java
 public void callback(Request request) {
   request.write("Howdy " + request.param("name"));
 }
@@ -117,11 +117,11 @@ This returns the POST data as a `String` (including linebreaks).
 
 An anonymous class can be directly passed into the route method:
 
-```
+```java
 server.get("/", new Response() {
   @Override
   public void callback(Request request) {
-	// ...
+    // ...
   }
 });
 ```
@@ -130,18 +130,18 @@ server.get("/", new Response() {
 
 A callback class has to implement the `Response` interface:
 
-```
+```java
 class MyCallback implements Response {
   @Override
   public void callback(Request request) {
-	// ...
+    // ...
   }
 }
 ```
 
 and then be passed into the route method:
 
-```
+```java
 server.get("/", new MyCallback());
 ```
 
@@ -150,7 +150,7 @@ server.get("/", new MyCallback());
 By default, TinyServer sends `text/plain` responses.  
 In order to use a formatted response, it's necessary to set the response class accordingly:
 
-```
+```java
 server.setResponseFormat(<format object>);
 ```
 
@@ -163,13 +163,13 @@ Every response class comes with four methods:
 
 These methods are accessible by calling the `write()` method in your callback method:
 
-```
+```java
 request.write().success("Hello world.");
 ```
 
 **Shortcut:** Alternatively, you can pass your data directly into the `write()` method, which is an alias for the `success()` method:
 
-```
+```java
 request.write("Hello world.");
 ```
 
@@ -179,7 +179,7 @@ To serve a file, simply pass its path into the `success(String filePath)` method
 
 Example usage:
 
-```
+```java
 server.setResponseFormat(new FileResponse());
 server.get("/kitten", new Response() {
   @Override
@@ -206,7 +206,7 @@ The `success(String htmlContent)` method accepts an HTML `String`.
 
 Example usage:
 
-```
+```java
 server.setResponseFormat(new HtmlResponse());
 server.get("/halloween", new Response() {
   @Override
@@ -248,7 +248,7 @@ The `success()` method requires a `Map` object, that holds the `key => value` pa
 
 Example usage:
 
-```
+```java
 server.setResponseFormat(new JsonResponse());
 server.get("/weather", new Response() {
   @Override
@@ -257,7 +257,7 @@ server.get("/weather", new Response() {
     map.put("location", "Munich");
     map.put("condition", "fair");
     map.put("temprature", "32 °C");
-	request.write(map);
+	  request.write(map);
   }
 });
 ```
@@ -306,7 +306,7 @@ and its constructor must call `super(<MIME type>)`.
 
 POST routes can be tested with cURL via the terminal:
 
-```
+```shell
 curl -X POST -d 'hello world' localhost:8200/data --header "Content-Type:text/plain"
 curl -X POST -d @hello.txt localhost:8200/file --header "Content-Type:text/plain"
 ```
