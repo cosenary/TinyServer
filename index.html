@@ -1,0 +1,441 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>TinyServer by cosenary</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>TinyServer</h1>
+        <p>A lightweight HTTP server written in Java.  </p>
+        <p class="view"><a href="https://github.com/cosenary/TinyServer">View the Project on GitHub <small>cosenary/TinyServer</small></a></p>
+        <ul>
+          <li><a href="https://github.com/cosenary/TinyServer/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/cosenary/TinyServer/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/cosenary/TinyServer">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="tinyserver" class="anchor" href="#tinyserver"><span class="octicon octicon-link"></span></a>TinyServer</h1>
+
+<p>TinyServer is a lightweight HTTP server written in Java.<br>
+Your feedback is always welcome.</p>
+
+<h4>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features:</h4>
+
+<ul>
+<li>Multithreaded</li>
+<li>GET paramters</li>
+<li>POST requests</li>
+<li>RESTful routes</li>
+<li>Callback methods</li>
+<li>Fileserver capability</li>
+<li>File, JSON, HTML response classes (easy to write your own)</li>
+<li>High performance</li>
+</ul><p>TinyServer is perfect for embedding into your applications.</p>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>Java 7+</li>
+<li>Response class dependencies <em>[optional]</em><br>
+</li>
+</ul><h2>
+<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h2>
+
+<p>First import the server library: <code>import net.metzweb.tinyserver.*;</code><br>
+Now you are good to go and can setup the server:</p>
+
+<div class="highlight"><pre><span class="c1">// init server at port 8200</span>
+<span class="n">TinyServer</span> <span class="n">server</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TinyServer</span><span class="o">(</span><span class="mi">8200</span><span class="o">);</span>
+
+<span class="c1">// define a GET route</span>
+<span class="n">server</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"/"</span><span class="o">,</span> <span class="k">new</span> <span class="n">Response</span><span class="o">()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">callback</span><span class="o">(</span><span class="n">Request</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">request</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"Hello world :)"</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+
+<span class="c1">// start server</span>
+<span class="n">server</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</pre></div>
+
+<p>and make your first request: <code>http://localhost:8200</code><br>
+If everything works well, you will get a friendly welcome response:</p>
+
+<pre><code>Hello world :)
+</code></pre>
+
+<blockquote>
+<p>For a working example, take a look into the <code>/example</code> folder.</p>
+</blockquote>
+
+<h2>
+<a name="details" class="anchor" href="#details"><span class="octicon octicon-link"></span></a>Details</h2>
+
+<h3>
+<a name="server" class="anchor" href="#server"><span class="octicon octicon-link"></span></a>Server</h3>
+
+<p>Initialize the server by calling: <code>new TinyServer(&lt;port&gt;)</code></p>
+
+<p>After you have defined all routes, simply call <code>start()</code> to start the server and receive requests.</p>
+
+<h3>
+<a name="request-routes" class="anchor" href="#request-routes"><span class="octicon octicon-link"></span></a>Request routes</h3>
+
+<h4>
+<a name="get" class="anchor" href="#get"><span class="octicon octicon-link"></span></a>GET</h4>
+
+<p><code>get(&lt;route&gt;, &lt;callback&gt;)</code></p>
+
+<h4>
+<a name="post" class="anchor" href="#post"><span class="octicon octicon-link"></span></a>POST</h4>
+
+<p><code>post(&lt;route&gt;, &lt;callback&gt;)</code></p>
+
+<h4>
+<a name="route-patterns" class="anchor" href="#route-patterns"><span class="octicon octicon-link"></span></a>Route patterns</h4>
+
+<p>Before you define your request routes, please take a look at the following guidlines:</p>
+
+<ol>
+<li>all routes have to start with a <strong>backslash</strong>: <code>/hello/world</code>
+
+<ul>
+<li>the default route is simply: <code>/</code>
+</li>
+</ul>
+</li>
+<li>request parameters are <strong>not allowed</strong> in your <strong>route path</strong>: <del><code>/hello?foo=bar</code></del>
+
+<ul>
+<li>access the params instead in the <a href="#callback">callback method</a>.</li>
+</ul>
+</li>
+<li>
+<em>"fake"</em> file <strong>extensions</strong> allowed: <code>/hello.json</code>
+
+<ul>
+<li>useful, if you associate it with the according <a href="#response">response format</a>.</li>
+</ul>
+</li>
+</ol><h3>
+<a name="request-parameters" class="anchor" href="#request-parameters"><span class="octicon octicon-link"></span></a>Request parameters</h3>
+
+<h4>
+<a name="get-parameter" class="anchor" href="#get-parameter"><span class="octicon octicon-link"></span></a>GET parameter</h4>
+
+<p>If your request contains request parameters, they will be accessible in your callback method.</p>
+
+<p>To receive a particular parameter, pass its key into the 
+<code>param(&lt;key&gt;)</code> method. If the key doesn't exists it will return <code>null</code>.</p>
+
+<p>Example usage: <code>/hello?name=Christian</code></p>
+
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">callback</span><span class="o">(</span><span class="n">Request</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">request</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"Howdy "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">param</span><span class="o">(</span><span class="s">"name"</span><span class="o">));</span>
+<span class="o">}</span>
+</pre></div>
+
+<h4>
+<a name="route-parameter-restful" class="anchor" href="#route-parameter-restful"><span class="octicon octicon-link"></span></a>Route parameter <em>(RESTful)</em>
+</h4>
+
+<p>In order to receive route parameters, mark these with placeholders: <code>[parameter]</code></p>
+
+<p><code>get("/hello/[name]/[age]", &lt;callback&gt;)</code></p>
+
+<p>These values are accessible in your callback method, the same way as one accesses GET params:<br><code>request.param(&lt;parameter&gt;)</code></p>
+
+<h4>
+<a name="post-data" class="anchor" href="#post-data"><span class="octicon octicon-link"></span></a>POST data</h4>
+
+<p>Retrieve posted data, by using the <code>getData()</code> method in your callback method.<br>
+This returns the POST data as a <code>String</code> (including linebreaks).</p>
+
+<h3>
+<a name="callback" class="anchor" href="#callback"><span class="octicon octicon-link"></span></a>Callback</h3>
+
+<h5>
+<a name="anonymous-class" class="anchor" href="#anonymous-class"><span class="octicon octicon-link"></span></a>Anonymous class</h5>
+
+<p>An anonymous class can be directly passed into the route method:</p>
+
+<div class="highlight"><pre><span class="n">server</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"/"</span><span class="o">,</span> <span class="k">new</span> <span class="n">Response</span><span class="o">()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">callback</span><span class="o">(</span><span class="n">Request</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+<h5>
+<a name="standalone-class" class="anchor" href="#standalone-class"><span class="octicon octicon-link"></span></a>Standalone class</h5>
+
+<p>A callback class has to implement the <code>Response</code> interface:</p>
+
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">MyCallback</span> <span class="kd">implements</span> <span class="n">Response</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">callback</span><span class="o">(</span><span class="n">Request</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p>and then be passed into the route method:</p>
+
+<div class="highlight"><pre><span class="n">server</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"/"</span><span class="o">,</span> <span class="k">new</span> <span class="n">MyCallback</span><span class="o">());</span>
+</pre></div>
+
+<h3>
+<a name="response" class="anchor" href="#response"><span class="octicon octicon-link"></span></a>Response</h3>
+
+<p>By default, TinyServer sends <code>text/plain</code> responses.<br>
+In order to use a formatted response, it's necessary to set the response class accordingly:</p>
+
+<div class="highlight"><pre><span class="n">server</span><span class="o">.</span><span class="na">setResponseFormat</span><span class="o">(&lt;</span><span class="n">format</span> <span class="n">object</span><span class="o">&gt;);</span>
+</pre></div>
+
+<p>Every response class comes with four methods:</p>
+
+<ul>
+<li>200 Success: <code>success(&lt;data&gt;)</code>
+</li>
+<li>403 Forbidden: <code>forbidden()</code>
+</li>
+<li>404 Not found: <code>notFound()</code>
+</li>
+<li>500 Server Error: <code>error()</code>
+</li>
+</ul><p>These methods are accessible by calling the <code>write()</code> method in your callback method:</p>
+
+<div class="highlight"><pre><span class="n">request</span><span class="o">.</span><span class="na">write</span><span class="o">().</span><span class="na">success</span><span class="o">(</span><span class="s">"Hello world."</span><span class="o">);</span>
+</pre></div>
+
+<p><strong>Shortcut:</strong> Alternatively, you can pass your data directly into the <code>write()</code> method, which is an alias for the <code>success()</code> method:</p>
+
+<div class="highlight"><pre><span class="n">request</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"Hello world."</span><span class="o">);</span>
+</pre></div>
+
+<h4>
+<a name="file" class="anchor" href="#file"><span class="octicon octicon-link"></span></a>File</h4>
+
+<p>To serve a file, simply pass its path into the <code>success(String filePath)</code> method.</p>
+
+<p>Example usage:</p>
+
+<div class="highlight"><pre><span class="n">server</span><span class="o">.</span><span class="na">setResponseFormat</span><span class="o">(</span><span class="k">new</span> <span class="n">FileResponse</span><span class="o">());</span>
+<span class="n">server</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"/kitten"</span><span class="o">,</span> <span class="k">new</span> <span class="n">Response</span><span class="o">()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">callback</span><span class="o">(</span><span class="n">Request</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">request</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"kitten.jpg"</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+<p>Server response:</p>
+
+<pre><code>HTTP/1.1 200 OK
+Cache-Control: private, max-age=0
+Content-Type: image/jpeg
+Server: TinyServer
+
+&lt;kitten.jpg&gt;
+</code></pre>
+
+<h4>
+<a name="html" class="anchor" href="#html"><span class="octicon octicon-link"></span></a>HTML</h4>
+
+<p>The <code>success(String htmlContent)</code> method accepts an HTML <code>String</code>.</p>
+
+<p>Example usage:</p>
+
+<div class="highlight"><pre><span class="n">server</span><span class="o">.</span><span class="na">setResponseFormat</span><span class="o">(</span><span class="k">new</span> <span class="n">HtmlResponse</span><span class="o">());</span>
+<span class="n">server</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"/halloween"</span><span class="o">,</span> <span class="k">new</span> <span class="n">Response</span><span class="o">()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">callback</span><span class="o">(</span><span class="n">Request</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">output</span> <span class="o">=</span> <span class="s">"&lt;!DOCTYPE html&gt;"</span>
+      <span class="o">+</span> <span class="s">"&lt;html&gt;"</span>
+      <span class="o">+</span> <span class="s">"  &lt;head&gt;&lt;title&gt;31 October&lt;/title&gt;&lt;/head&gt;"</span>
+      <span class="o">+</span> <span class="s">"  &lt;body&gt;&lt;h2&gt;Happy Halloween!&lt;/h2&gt;&lt;/body&gt;"</span>
+      <span class="o">+</span> <span class="s">"&lt;/html&gt;"</span><span class="o">;</span>
+    <span class="n">request</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">output</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+<p>Server response:</p>
+
+<pre><code>HTTP/1.1 200 OK
+Cache-Control: private, max-age=0
+Content-Type: text/html; charset=utf-8
+Server: TinyServer
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;&lt;title&gt;31 October&lt;/title&gt;&lt;/head&gt;"
+  &lt;body&gt;&lt;h2&gt;Happy Halloween!&lt;/h2&gt;&lt;/body&gt;"
+&lt;/html&gt;
+</code></pre>
+
+<h4>
+<a name="json" class="anchor" href="#json"><span class="octicon octicon-link"></span></a>JSON</h4>
+
+<hr><p><strong>Please note:</strong> This requires the <a href="http://code.google.com/p/json-simple/">JSON simple</a> Java library.</p>
+
+<hr><p>The <code>success()</code> method requires a <code>Map</code> object, that holds the <code>key =&gt; value</code> pairs.</p>
+
+<p>Example usage:</p>
+
+<div class="highlight"><pre><span class="n">server</span><span class="o">.</span><span class="na">setResponseFormat</span><span class="o">(</span><span class="k">new</span> <span class="n">JsonResponse</span><span class="o">());</span>
+<span class="n">server</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"/weather"</span><span class="o">,</span> <span class="k">new</span> <span class="n">Response</span><span class="o">()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">callback</span><span class="o">(</span><span class="n">Request</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+    <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"location"</span><span class="o">,</span> <span class="s">"Munich"</span><span class="o">);</span>
+    <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"condition"</span><span class="o">,</span> <span class="s">"fair"</span><span class="o">);</span>
+    <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"temperature"</span><span class="o">,</span> <span class="s">"32 °C"</span><span class="o">);</span>
+    <span class="n">request</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">map</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+<p>Response:</p>
+
+<pre><code>HTTP/1.1 200 OK
+Cache-Control: no-cache, must-revalidate
+Content-Type: application/json; charset=utf-8
+Server: TinyServer
+
+{
+  "status": "200",
+  "message": "OK",
+  "data": {
+    "condition": "fair",
+    "location": "Munich",
+    "temprature": "32 °C"
+  }
+}
+</code></pre>
+
+<h4>
+<a name="other-formats" class="anchor" href="#other-formats"><span class="octicon octicon-link"></span></a>Other formats</h4>
+
+<p>It's simple to create your own response class for a missing format.<br>
+You can find a response class template in the example folder.</p>
+
+<hr><p>Every response class <strong>must extend the abstract <code>ResponseFormat</code></strong> class<br>
+and its constructor must call <code>super(&lt;MIME type&gt;)</code>.</p>
+
+<hr><h4>
+<a name="response-classes" class="anchor" href="#response-classes"><span class="octicon octicon-link"></span></a>Response classes</h4>
+
+<ul>
+<li>
+<code>File</code> <a href="#">response class</a>
+</li>
+<li>
+<code>HTML</code> <a href="#">response class</a>
+</li>
+<li>
+<code>JSON</code> <a href="#">response class</a>
+
+<ul>
+<li>requires <a href="http://code.google.com/p/json-simple/">JSON simple</a>
+</li>
+</ul>
+</li>
+</ul><blockquote>
+<p>Let me know if you have created a new response class, so it can be add it to the list.</p>
+</blockquote>
+
+<h2>
+<a name="misc" class="anchor" href="#misc"><span class="octicon octicon-link"></span></a>Misc</h2>
+
+<p>POST routes can be tested with cURL via the terminal:</p>
+
+<pre lang="shell"><code>curl -X POST -d 'hello world' localhost:8200/data --header "Content-Type:text/plain"
+curl -X POST -d @hello.txt localhost:8200/file --header "Content-Type:text/plain"
+</code></pre>
+
+<h2>
+<a name="config" class="anchor" href="#config"><span class="octicon octicon-link"></span></a>Config</h2>
+
+<ul>
+<li>Server port: <code>new TinyServer(&lt;port&gt;)</code>
+</li>
+</ul><h2>
+<a name="issues" class="anchor" href="#issues"><span class="octicon octicon-link"></span></a>Issues</h2>
+
+<p>Please submit issues through the <a href="https://github.com/cosenary/TinyServer/issues">issue tracker</a> on GitHub.</p>
+
+<h2>
+<a name="history" class="anchor" href="#history"><span class="octicon octicon-link"></span></a>History</h2>
+
+<p><strong>TinyServer 1.0 - 13/07/2013</strong></p>
+
+<ul>
+<li>
+<code>release</code> First official version</li>
+<li>
+<code>update</code> Major code improvements</li>
+<li>
+<code>update</code> DRY code guidelines</li>
+<li>
+<code>update</code> Rewritten documentation</li>
+<li>
+<code>feature</code> RESTful route parameters</li>
+<li>
+<code>feature</code> anonymous callbacks</li>
+<li>
+<code>feature</code> JSON response class</li>
+<li>
+<code>feature</code> Java 7 improvements</li>
+<li>
+<code>feature</code> POST request support</li>
+<li>
+<code>feature</code> File response class</li>
+</ul><p><strong>Server 0.8 - 28/10/2012</strong></p>
+
+<ul>
+<li>
+<code>release</code> Internal testing version</li>
+<li>
+<code>feature</code> Multithreading</li>
+<li>
+<code>update</code> Better documentation</li>
+</ul><p><strong>Server 0.5 - 24/10/2012</strong></p>
+
+<ul>
+<li>
+<code>release</code> First internal alpha version</li>
+</ul><h2>
+<a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>Copyright (c) 2013 - Programmed by Christian Metz<br>
+Released under the <a href="http://www.opensource.org/licenses/bsd-license.php">BSD License</a>.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/cosenary">cosenary</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
