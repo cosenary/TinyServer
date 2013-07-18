@@ -42,7 +42,6 @@ public class Connection extends Thread {
       // create reader and writer
       OutputStream output = socket.getOutputStream();
       BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-      // BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output, "UTF-8"));
       
       // read first header line
       String line = reader.readLine();
@@ -83,6 +82,7 @@ public class Connection extends Thread {
       }
       
     } catch (IOException ex) {
+      ex.printStackTrace();
       System.out.println("I/O Exception while serving client.");
     } finally {
       try {
