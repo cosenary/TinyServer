@@ -8,7 +8,7 @@ package net.metzweb.tinyserver;
  * 
  * @author Christian Metz | christian@metzweb.net
  * @since 15.06.2013
- * @version 0.1
+ * @version 1.1
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public interface Response {

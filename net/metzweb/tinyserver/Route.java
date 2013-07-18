@@ -3,6 +3,7 @@ package net.metzweb.tinyserver;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import net.metzweb.tinyserver.response.ResponseFormat;
 
 /**
  * Represents a route.
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
  * 
  * @author Christian Metz | christian@metzweb.net
  * @since 16.06.2013
- * @version 1.0
+ * @version 1.1
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class Route {
@@ -22,8 +23,10 @@ public class Route {
   private final Pattern routePattern;
   private final Response callback;
 
+  private ResponseFormat responseFormat;
+
   /**
-   * Precompile route param pattern.
+   * Precompiled route pattern.
    */
   private static final Pattern pattern = Pattern.compile("\\[(.*?)\\]");
 
@@ -102,6 +105,24 @@ public class Route {
    */
   public Response getCallback() {
     return callback;
+  }
+
+  /**
+   * Response format Getter.
+   * 
+   * @return Response format object.
+   */
+  public ResponseFormat getResponseFormat() {
+    return responseFormat;
+  }
+
+  /**
+   * Response format Setter.
+   * 
+   * @param format Response format object.
+   */
+  public void setResponseFormat(ResponseFormat format) {
+    responseFormat = format;
   }
 
   /**

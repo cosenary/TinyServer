@@ -16,7 +16,7 @@ import net.metzweb.tinyserver.response.ResponseFormat;
  * 
  * @author Christian Metz | christian@metzweb.net
  * @since 18.05.2013
- * @version 1.0
+ * @version 1.1
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class Request {
@@ -34,7 +34,7 @@ public class Request {
    * Response format class.
    * e.g. HtmlResponse
    */
-  private final ResponseFormat response;
+  private ResponseFormat response;
 
   /**
    * POST data.
@@ -52,10 +52,7 @@ public class Request {
     this.request = request;
     this.server = server;
     this.outputStream = outputStream;
-    
-    // set response class
-    response = (server.getResponseFormat() != null) ? server.getResponseFormat() : new PlainResponse();    
-    response.setOutputStream(outputStream);
+    processResponseFormat(null);
   }
 
   /**
@@ -170,7 +167,8 @@ public class Request {
   /**
    * Trigger route.
    * 
-   * @param requestURL The requested URL.
+   * @param requestURL  The requested URL.
+   * @param isPostRoute Whether it's a POST route.
    */
   private void triggerRoute(String requestURL, boolean isPostRoute) {
     if (server.isRouteRegistered(requestURL, isPostRoute)) {
@@ -189,6 +187,7 @@ public class Request {
       }
       
       // trigger callback
+      processResponseFormat(route.getResponseFormat());
       route.getCallback().callback(this);
       
       try {
@@ -200,6 +199,22 @@ public class Request {
       // route not found
       response.notFound();
     }
+  }
+
+  /**
+   * Process response format.
+   * 
+   * @param format Response class, defined in a Route.
+   */
+  private void processResponseFormat(ResponseFormat format) {
+    if (format != null) {
+      response = format;
+    } else if (server.getResponseFormat() != null) {
+      response = server.getResponseFormat();
+    } else {
+      response = new PlainResponse();
+    }  
+    response.setOutputStream(outputStream);
   }
 
 }

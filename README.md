@@ -14,7 +14,7 @@ Your feedback is always welcome.
 - File, JSON, HTML response classes (easy to write your own)
 - High performance
 
-TinyServer is perfect for embedding into your applications.
+TinyServer is perfect for embedding it into your applications.
 
 ## Requirements ##
 
@@ -63,11 +63,11 @@ After you have defined all routes, simply call `start()` to start the server and
 
 #### GET
 
-`get(<route>, <callback>)`
+`Route get(<route>, <callback>)`
 
 #### POST
 
-`post(<route>, <callback>)`
+`Route post(<route>, <callback>)`
 
 #### Route patterns
 
@@ -152,6 +152,17 @@ In order to use a formatted response, it's necessary to set the response class a
 
 ```java
 server.setResponseFormat(<format object>);
+```
+
+In order to define the response format for each route, one appends the format Setter to the route method (since the route methods return a `Route` object):
+
+```java
+server.get("/", new Response() {
+  @Override
+  public void callback(Request request) {
+    // ...
+  }
+}).setResponseFormat(<format object>);
 ```
 
 Every response class comes with four methods:
@@ -295,10 +306,11 @@ and its constructor must call `super(<MIME type>)`.
 
 #### Response classes
 
-- `File` [response class](#)
-- `HTML` [response class](#)
-- `JSON` [response class](#)
+- `FileResponse`
+- `HtmlResponse`
+- `JsonResponse`
   - requires [JSON simple](http://code.google.com/p/json-simple/)
+- `PlainResponse` *(default)*
 
 > Let me know if you have created a new response class, so it can be add it to the list.
 
@@ -320,6 +332,11 @@ curl -X POST -d @hello.txt localhost:8200/file --header "Content-Type:text/plain
 Please submit issues through the [issue tracker](https://github.com/cosenary/TinyServer/issues) on GitHub.
 
 ## History
+
+**TinyServer 1.1 - 18/07/2013**
+
+- `update` Improved documentation
+- `feature` Routes can have their own response formats
 
 **TinyServer 1.0 - 13/07/2013**
 

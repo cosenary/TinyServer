@@ -13,7 +13,7 @@ import net.metzweb.tinyserver.response.ResponseFormat;
  * 
  * @author Christian Metz | christian@metzweb.net
  * @since 15.06.2013
- * @version 1.0
+ * @version 1.1
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class TinyServer {
@@ -25,7 +25,10 @@ public class TinyServer {
   private LinkedList<Route> getRoutes = new LinkedList<>();
   private LinkedList<Route> postRoutes = new LinkedList<>();
 
-  private ResponseFormat responseFormat;
+  /**
+   * Route specific response format.
+   */
+  private ResponseFormat responseFormat = null;
 
   /**
    * Custom constructor.
@@ -46,23 +49,27 @@ public class TinyServer {
   /**
    * Register a new GET route.
    * 
-   * @param String    Route path (has to start with a backslash).
-   * @param Response  Callback object.
-   * @return void
+   * @param  String   Route path (has to start with a backslash).
+   * @param  Response Callback object.
+   * @return Route    Route object.
    */
-  public void get(String route, Response callback) {
-    getRoutes.add(new Route(route, callback));
+  public Route get(String route, Response callback) {
+    Route routeObj = new Route(route, callback);
+    getRoutes.add(routeObj);
+    return routeObj;
   }
 
   /**
    * Register a new POST route.
    * 
-   * @param String    Route path (has to start with a backslash).
-   * @param Response  Callback object.
-   * @return void
+   * @param  String   Route path (has to start with a backslash).
+   * @param  Response Callback object.
+   * @return Route    Route object.
    */
-  public void post(String route, Response callback) {
-    postRoutes.add(new Route(route, callback));
+  public Route post(String route, Response callback) {
+    Route routeObj = new Route(route, callback);
+    postRoutes.add(routeObj);
+    return routeObj;
   }
 
   /**

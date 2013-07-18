@@ -14,7 +14,7 @@ import java.net.Socket;
  * 
  * @author Christian Metz | christian@metzweb.net
  * @since 15.10.2012
- * @version 1.0
+ * @version 1.1
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class Connection extends Thread {

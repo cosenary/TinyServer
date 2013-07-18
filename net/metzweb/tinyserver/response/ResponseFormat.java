@@ -14,7 +14,7 @@ import java.io.Writer;
  * 
  * @author Christian Metz
  * @since 20.06.2013
- * @version 1.0
+ * @version 1.1
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public abstract class ResponseFormat<T> {
