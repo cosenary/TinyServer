@@ -83,18 +83,20 @@ public class TinyServer {
       // listen for connections
       while (true) {
         // accept connection and receive socket
-        Socket socket = serverSocket.accept();
-        // establish connection
-        Connection connection = new Connection(socket, this);
-        // start connection thread
-        connection.start();
-        // store connection
-        connections.add(connection);
-        
-        System.out.println("Client connected: " + socket);
+        try (Socket socket = serverSocket.accept()) {
+          System.out.println("Client connected: " + socket);
+          // establish connection
+          Connection connection = new Connection(socket, this);
+          // start connection thread
+          connection.start();
+          // store connection
+          connections.add(connection);
+        } catch (IOException e) {
+          System.err.println("Request couldn't be accepted.");
+        }
       }
     } catch (IOException e) {
-      System.out.println("Port already in use: " + port);
+      System.err.println("Port already in use: " + port);
     }
   }
 
