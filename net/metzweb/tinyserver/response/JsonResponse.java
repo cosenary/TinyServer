@@ -13,7 +13,7 @@ import org.json.simple.JSONValue;
  * 
  * @author Christian Metz | christian@metzweb.net
  * @since 20.06.2013
- * @version 1.1
+ * @version 1.2
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class JsonResponse extends ResponseFormat<Map> {
@@ -49,7 +49,12 @@ public class JsonResponse extends ResponseFormat<Map> {
    */
   @Override
   public void forbidden() {
-    writeJson(STATUS_CODE.FORBIDDEN, "Forbidden");
+    forbidden("Forbidden");
+  }
+
+  @Override
+  public void forbidden(String message) {
+    writeJson(STATUS_CODE.FORBIDDEN, message);
   }
 
   /**
@@ -57,7 +62,12 @@ public class JsonResponse extends ResponseFormat<Map> {
    */
   @Override
   public void notFound() {
-    writeJson(STATUS_CODE.NOT_FOUND, "Not Found");
+    notFound("Not Found");
+  }
+
+  @Override
+  public void notFound(String message) {
+    writeJson(STATUS_CODE.NOT_FOUND, message);
   }
 
   /**
@@ -65,7 +75,12 @@ public class JsonResponse extends ResponseFormat<Map> {
    */
   @Override
   public void error() {
-    writeJson(STATUS_CODE.ERROR, "Internal Server Error");
+    error("Internal Server Error");
+  }
+
+  @Override
+  public void error(String message) {
+    writeJson(STATUS_CODE.ERROR, message);
   }
 
   /**

@@ -165,12 +165,12 @@ server.get("/", new Response() {
 }).setResponseFormat(<format object>);
 ```
 
-Every response class comes with four methods:
+Every response class comes with four methods (`message` is optional):
 
 - 200 Success: `success(<data>)`
-- 403 Forbidden: `forbidden()`
-- 404 Not found: `notFound()`
-- 500 Server Error: `error()`
+- 403 Forbidden: `forbidden(<message>)`
+- 404 Not found: `notFound(<message>)`
+- 500 Server Error: `error(<message>)`
 
 These methods are accessible by calling the `write()` method in your callback method:
 
@@ -255,7 +255,8 @@ Server: TinyServer
 
 ---
 
-The `success()` method requires a `Map` object, that holds the `key => value` pairs.
+The `success()` method requires a `Map` object, that holds the `key => value` pairs,  
+or alternatively a `List` object.
 
 Example usage:
 
@@ -332,6 +333,10 @@ curl -X POST -d @hello.txt localhost:8200/file --header "Content-Type:text/plain
 Please submit issues through the [issue tracker](https://github.com/cosenary/TinyServer/issues) on GitHub.
 
 ## History
+
+**TinyServer 1.2 - 24/07/2013**
+
+- `feature` Added optional `message` parameter to all response methods
 
 **TinyServer 1.1 - 18/07/2013**
 

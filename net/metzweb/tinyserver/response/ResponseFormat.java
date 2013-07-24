@@ -14,7 +14,7 @@ import java.io.Writer;
  * 
  * @author Christian Metz
  * @since 20.06.2013
- * @version 1.1
+ * @version 1.2
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public abstract class ResponseFormat<T> {
@@ -108,21 +108,33 @@ public abstract class ResponseFormat<T> {
    * 403 forbidden.
    */
   public void forbidden() {
-    write(STATUS_CODE.FORBIDDEN.getHeader(), STATUS_CODE.FORBIDDEN.getDesc());
+    forbidden(STATUS_CODE.FORBIDDEN.getDesc());
+  }
+
+  public void forbidden(String message) {
+    write(STATUS_CODE.FORBIDDEN.getHeader(), message);
   }
 
   /**
    * 404 not found.
    */
   public void notFound() {
-    write(STATUS_CODE.NOT_FOUND.getHeader(), STATUS_CODE.NOT_FOUND.getDesc());
+    notFound(STATUS_CODE.NOT_FOUND.getDesc());
+  }
+
+  public void notFound(String message) {
+    write(STATUS_CODE.NOT_FOUND.getHeader(), message);
   }
 
   /**
    * 500 internal server error.
    */
   public void error() {
-    write(STATUS_CODE.ERROR.getHeader(), STATUS_CODE.ERROR.getDesc());
+    error(STATUS_CODE.ERROR.getDesc());
+  }
+
+  public void error(String message) {
+    write(STATUS_CODE.ERROR.getHeader(), message);
   }
 
   /**

@@ -7,7 +7,7 @@ package net.metzweb.tinyserver.response;
  * 
  * @author Christian Metz | christian@metzweb.net
  * @since 20.06.2013
- * @version 1.1
+ * @version 1.2
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class HtmlResponse extends ResponseFormat<String> {
@@ -47,7 +47,12 @@ public class HtmlResponse extends ResponseFormat<String> {
    */
   @Override
   public void forbidden() {
-    String data = String.format(HTML_WRAPPER, "Forbidden", "Forbidden", STATUS_CODE.FORBIDDEN.getDesc());
+    forbidden("Forbidden");
+  }
+
+  @Override
+  public void forbidden(String message) {
+    String data = String.format(HTML_WRAPPER, "Forbidden", message, STATUS_CODE.FORBIDDEN.getDesc());
     write(STATUS_CODE.FORBIDDEN.getHeader(), data);
   }
 
@@ -56,7 +61,12 @@ public class HtmlResponse extends ResponseFormat<String> {
    */
   @Override
   public void notFound() {
-    String data = String.format(HTML_WRAPPER, "Not Found", "Not Found", STATUS_CODE.NOT_FOUND.getDesc());
+    notFound("Not Found");
+  }
+
+  @Override
+  public void notFound(String message) {
+    String data = String.format(HTML_WRAPPER, "Not Found", message, STATUS_CODE.NOT_FOUND.getDesc());
     write(STATUS_CODE.NOT_FOUND.getHeader(), data);
   }
 
@@ -65,7 +75,12 @@ public class HtmlResponse extends ResponseFormat<String> {
    */
   @Override
   public void error() {
-    String data = String.format(HTML_WRAPPER, "Internal Server Error", "Internal Server Error", STATUS_CODE.ERROR.getDesc());
+    error("Internal Server Error");
+  }
+
+  @Override
+  public void error(String message) {
+    String data = String.format(HTML_WRAPPER, "Internal Server Error", message, STATUS_CODE.ERROR.getDesc());
     write(STATUS_CODE.ERROR.getHeader(), data);
   }
 
