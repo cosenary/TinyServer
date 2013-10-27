@@ -99,12 +99,18 @@ public void callback(Request request) {
 
 #### Route parameter *(RESTful)*
 
-In order to receive route parameters, mark these with placeholders: `[parameter]`
+In order to receive route parameters, mark these with placeholders: `[parameter]`  
 
 `get("/hello/[name]/[age]", <callback>)`
 
 These values are accessible in your callback method, the same way as one accesses GET params:  
 `request.param(<parameter>)`
+
+**Wildcards** are also supported by an asterisk: `*`
+
+`get("/hello/*/[name]", <callback>)`
+
+`request.params()` returns all wildcard parameters as an ordered list.
 
 #### POST data
 
@@ -333,6 +339,11 @@ curl -X POST -d @hello.txt localhost:8200/file --header "Content-Type:text/plain
 Please submit issues through the [issue tracker](https://github.com/cosenary/TinyServer/issues) on GitHub.
 
 ## History
+
+**TinyServer 1.3 - 28/10/2013**
+
+- `feature` Added support for wildcard route parameters
+- `update` Updated documentation accordingly
 
 **TinyServer 1.2 - 24/07/2013**
 

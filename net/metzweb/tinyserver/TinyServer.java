@@ -13,13 +13,12 @@ import net.metzweb.tinyserver.response.ResponseFormat;
  * 
  * @author Christian Metz | christian@metzweb.net
  * @since 15.06.2013
- * @version 1.1
+ * @version 1.3
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class TinyServer {
 
   private final int port;
-  private LinkedList<Connection> connections = new LinkedList<>();
 
   // collected GET and POST routes
   private LinkedList<Route> getRoutes = new LinkedList<>();
@@ -89,8 +88,6 @@ public class TinyServer {
           Connection connection = new Connection(socket, this);
           // start connection thread
           connection.start();
-          // store connection
-          connections.add(connection);
           
           System.out.println("Client connected: " + socket);
         } catch (IOException e) {

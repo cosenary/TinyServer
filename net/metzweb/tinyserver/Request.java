@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import net.metzweb.tinyserver.response.PlainResponse;
 import net.metzweb.tinyserver.response.ResponseFormat;
@@ -16,7 +17,7 @@ import net.metzweb.tinyserver.response.ResponseFormat;
  * 
  * @author Christian Metz | christian@metzweb.net
  * @since 18.05.2013
- * @version 1.1
+ * @version 1.3
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class Request {
@@ -29,6 +30,7 @@ public class Request {
    * Holds GET request parameters.
    */
   private final HashMap<String, String> params = new HashMap<>();
+  private final LinkedList<String> wildcardParams = new LinkedList<>();
 
   /**
    * Response format class.
@@ -117,6 +119,16 @@ public class Request {
   }
 
   /**
+   * Get all parameter values.
+   * Used to receive all wildcard values.
+   * 
+   * @return All wildcard `*` parameters.
+   */
+  public LinkedList<String> params() {
+    return wildcardParams;
+  }
+
+  /**
    * Get a request parameter by its key.
    * 
    * @param  String Parameter key (URL syntax: ?key=value)
@@ -181,7 +193,12 @@ public class Request {
         if (matcher.find()) {
           for (int i = 0; i < matcher.groupCount(); i++) {
             // add route parameter
-            addParam(route.getParam(i), matcher.group(i+1));
+            String paramKey = route.getParam(i);
+            if (paramKey.startsWith("*")) {
+              wildcardParams.add(matcher.group(i+1));
+            } else {
+              addParam(paramKey, matcher.group(i+1));
+            }
           }
         }
       }

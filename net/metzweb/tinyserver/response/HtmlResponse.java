@@ -7,7 +7,7 @@ package net.metzweb.tinyserver.response;
  * 
  * @author Christian Metz | christian@metzweb.net
  * @since 20.06.2013
- * @version 1.2
+ * @version 1.3
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class HtmlResponse extends ResponseFormat<String> {

@@ -1,6 +1,6 @@
 package net.metzweb.tinyserver;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.metzweb.tinyserver.response.ResponseFormat;
@@ -13,7 +13,7 @@ import net.metzweb.tinyserver.response.ResponseFormat;
  * 
  * @author Christian Metz | christian@metzweb.net
  * @since 16.06.2013
- * @version 1.1
+ * @version 1.3
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class Route {
@@ -28,16 +28,15 @@ public class Route {
   /**
    * Precompiled route pattern.
    */
-  private static final Pattern pattern = Pattern.compile("\\[(.*?)\\]");
+  private static final Pattern pattern = Pattern.compile("\\[(.*?)\\]|(\\*)");
 
   /**
    * Holds route parameters.
    */
-  private LinkedList<String> params = new LinkedList<>();
+  private ArrayList<String> params = new ArrayList<>();
 
   /**
    * Custom constructor.
-   * "\\:\\w+"
    * 
    * @param route     The route path.
    * @param callback  The callback object.
@@ -52,7 +51,7 @@ public class Route {
     this.callback = callback;
     
     // replace route param placeholder by regex.
-    this.routeRegex = route.replaceAll("\\[(.*?)\\]", "([^\\/]+)").replaceAll("\\*\\w+", "(.*?)");
+    this.routeRegex = route.replaceAll("\\[(.*?)\\]", "([^\\/]+)").replaceAll("\\*\\.*?", "(.*)");
     this.routePattern = Pattern.compile(routeRegex);
     matchParams();
   }
@@ -65,7 +64,7 @@ public class Route {
    * @return      The param name or null.
    */
   public String getParam(int index) {
-    if (params.size() < index) {
+    if (params.size() <= index) {
       return null;
     }
     return params.get(index);
@@ -139,9 +138,14 @@ public class Route {
    */
   private void matchParams() {
     Matcher matcher = pattern.matcher(route);
+    
     while (matcher.find()) {
-      for (int i=0; i < matcher.groupCount(); i++) {
-        params.add(matcher.group(i+1));
+      for (int i = 0; i < matcher.groupCount(); i++) {
+        String placeholder = matcher.group(i + 1);
+        // check whether one of the two piped regex matches
+        if (placeholder != null) {
+          params.add(placeholder.startsWith("*") ? ("*" + i) : matcher.group(i + 1));
+        }
       }
     }
   }
