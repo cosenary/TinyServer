@@ -381,3 +381,6 @@ Please submit issues through the [issue tracker](https://github.com/cosenary/Tin
 
 Copyright (c) 2013 - Programmed by Christian Metz  
 Released under the [BSD License](http://www.opensource.org/licenses/bsd-license.php).
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/cosenary/tinyserver/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
