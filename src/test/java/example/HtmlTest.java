@@ -1,3 +1,4 @@
+package example;
 import net.metzweb.tinyserver.Request;
 import net.metzweb.tinyserver.Response;
 import net.metzweb.tinyserver.TinyServer;
@@ -16,7 +17,7 @@ public class HtmlTest {
   public static void main(String[] args) {
     // init server at port 8200
     TinyServer server = new TinyServer(8200);
-    
+
     // setup a GET route
     server.get("/hello/[name]", new Response() {
       @Override
@@ -32,10 +33,10 @@ public class HtmlTest {
         request.write(htmlString);
       }
     });
-    
+
     // set HTML response class
     server.setResponseFormat(new HtmlResponse());
-    
+
     // start server
     server.start();
   }

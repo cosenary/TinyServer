@@ -1,8 +1,10 @@
-import java.util.HashMap;
+package example;
 import net.metzweb.tinyserver.Request;
 import net.metzweb.tinyserver.Response;
 import net.metzweb.tinyserver.TinyServer;
 import net.metzweb.tinyserver.response.JsonResponse;
+
+import java.util.HashMap;
 
 /**
  * TinyServer JSON test class.
