@@ -1,11 +1,12 @@
 package net.metzweb.tinyserver;
 
+import net.metzweb.tinyserver.response.ResponseFormat;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
-import net.metzweb.tinyserver.response.ResponseFormat;
 
 /**
  * TinyServer application logic.
@@ -14,7 +15,7 @@ import net.metzweb.tinyserver.response.ResponseFormat;
  * @author Christian Metz | christian@metzweb.net
  * @since 15.06.2013
  * @version 1.3
- * @license BSD http://www.opensource.org/licenses/bsd-license.php
+ * license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class TinyServer {
 
@@ -48,9 +49,9 @@ public class TinyServer {
   /**
    * Register a new GET route.
    * 
-   * @param  String   Route path (has to start with a backslash).
-   * @param  Response Callback object.
-   * @return Route    Route object.
+   * @param  route   Route path (has to start with a backslash).
+   * @param  callback Callback object.
+   * @return Route object.
    */
   public Route get(String route, Response callback) {
     Route routeObj = new Route(route, callback);
@@ -61,8 +62,8 @@ public class TinyServer {
   /**
    * Register a new POST route.
    * 
-   * @param  String   Route path (has to start with a backslash).
-   * @param  Response Callback object.
+   * @param route Route path (has to start with a backslash).
+   * @param callback Callback object.
    * @return Route    Route object.
    */
   public Route post(String route, Response callback) {
@@ -111,8 +112,8 @@ public class TinyServer {
   /**
    * Check whether a route path is registered.
    * 
-   * @param String  The route path, starting with a backslash.
-   * @return        Wherher route is registered.
+   * @param route  The route path, starting with a backslash.
+   * @return Whether route is registered.
    */
   public boolean isRouteRegistered(String route, boolean isPostRoute) {
     LinkedList<Route> routes = (isPostRoute) ? postRoutes : getRoutes;
@@ -127,8 +128,8 @@ public class TinyServer {
   /**
    * Check whether a route path is registered
    * 
-   * @param String  The route path.
-   * @return        Response callback object, implementing the Response interface.
+   * @param route  The route path.
+   * @return Response callback object, implementing the Response interface.
    */
   public Route getRoute(String route, boolean isPostRoute) {
     LinkedList<Route> routes = (isPostRoute) ? postRoutes : getRoutes;

@@ -4,12 +4,10 @@ package net.metzweb.tinyserver.response;
  * Plain text response.
  * Default response format.
  * 
- * @package TinyServer
- * 
  * @author Christian Metz | christian@metzweb.net
  * @since 15.06.2013
  * @version 1.3
- * @license BSD http://www.opensource.org/licenses/bsd-license.php
+ * license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class PlainResponse extends ResponseFormat<String> {
 

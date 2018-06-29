@@ -10,12 +10,10 @@ import java.util.Map;
  * JSON response.
  * Dependency: http://code.google.com/p/json-simple/
  * 
- * @package TinyServer
- * 
  * @author Christian Metz | christian@metzweb.net
  * @since 20.06.2013
  * @version 1.3
- * @license BSD http://www.opensource.org/licenses/bsd-license.php
+ * license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class JsonResponse extends ResponseFormat<Map> {
 
@@ -47,7 +45,7 @@ public class JsonResponse extends ResponseFormat<Map> {
   /**
    * 200 OK.
    * 
-   * @param data Map holding JSON key => value pairs.
+   * @param data Map holding JSON key - value pairs.
    */
   @Override
   public void success(Map data) {

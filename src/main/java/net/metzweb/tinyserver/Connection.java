@@ -10,12 +10,10 @@ import java.net.Socket;
  * Server connection.
  * Handels incoming connections.
  * 
- * @package TinyServer
- * 
  * @author Christian Metz | christian@metzweb.net
  * @since 15.10.2012
  * @version 1.3
- * @license BSD http://www.opensource.org/licenses/bsd-license.php
+ * license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class Connection extends Thread {
 

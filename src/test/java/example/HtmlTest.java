@@ -10,7 +10,7 @@ import net.metzweb.tinyserver.response.HtmlResponse;
  * @since 15.06.2013
  * @author Christian Metz | christian@metzweb.net
  * @version 1.0
- * @license BSD http://www.opensource.org/licenses/bsd-license.php
+ * license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class HtmlTest {
 

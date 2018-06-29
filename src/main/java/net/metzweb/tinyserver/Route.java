@@ -1,20 +1,19 @@
 package net.metzweb.tinyserver;
 
+import net.metzweb.tinyserver.response.ResponseFormat;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import net.metzweb.tinyserver.response.ResponseFormat;
 
 /**
  * Represents a route.
  * Holds the route path and its callback.
  * 
- * @package TinyServer
- * 
  * @author Christian Metz | christian@metzweb.net
  * @since 16.06.2013
  * @version 1.3
- * @license BSD http://www.opensource.org/licenses/bsd-license.php
+ * license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class Route {
 

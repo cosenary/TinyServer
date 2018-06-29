@@ -1,24 +1,23 @@
 package net.metzweb.tinyserver;
 
+import net.metzweb.tinyserver.response.PlainResponse;
+import net.metzweb.tinyserver.response.ResponseFormat;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
-import net.metzweb.tinyserver.response.PlainResponse;
-import net.metzweb.tinyserver.response.ResponseFormat;
 
 /**
  * Request handler.
  * Parses incoming requests.
  * 
- * @package TinyServer
- * 
  * @author Christian Metz | christian@metzweb.net
  * @since 18.05.2013
  * @version 1.3
- * @license BSD http://www.opensource.org/licenses/bsd-license.php
+ * license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 public class Request {
 
@@ -48,7 +47,7 @@ public class Request {
    * 
    * @param request The request header.
    * @param server  The server.
-   * @param writer  The connection writer.
+   * @param outputStream  The connection writer.
    */
   public Request(String[] request, TinyServer server, OutputStream outputStream) {
     this.request = request;
@@ -131,8 +130,8 @@ public class Request {
   /**
    * Get a request parameter by its key.
    * 
-   * @param  String Parameter key (URL syntax: ?key=value)
-   * @return        The parameter's value or null if it doesn't exist.
+   * @param  key Parameter key (URL syntax: ?key=value)
+   * @return The parameter's value or null if it doesn't exist.
    */
   public String param(String key) {
     // check whether requested key exists
