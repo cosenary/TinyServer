@@ -15,7 +15,7 @@ import java.util.Map;
  * @version 1.3
  * license BSD http://www.opensource.org/licenses/bsd-license.php
  */
-public class JsonResponse extends ResponseFormat<Map> {
+public class JsonResponse extends ResponseFormat<Object> {
 
   private boolean wrapResponse;
 
@@ -48,7 +48,7 @@ public class JsonResponse extends ResponseFormat<Map> {
    * @param data Map holding JSON key - value pairs.
    */
   @Override
-  public void success(Map data) {
+  public void success(Object data) {
     writeJson(STATUS_CODE.SUCCESS, "OK", data);
   }
 
