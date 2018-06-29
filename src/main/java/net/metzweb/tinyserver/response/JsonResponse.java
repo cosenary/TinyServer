@@ -1,9 +1,10 @@
 package net.metzweb.tinyserver.response;
 
+import org.json.simple.JSONValue;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import org.json.simple.JSONValue;
 
 /**
  * JSON response.
@@ -18,11 +19,20 @@ import org.json.simple.JSONValue;
  */
 public class JsonResponse extends ResponseFormat<Map> {
 
+  private boolean wrapResponse;
+
+
+  public JsonResponse(boolean wrapResponse) {
+    this();
+    this.wrapResponse = wrapResponse;
+  }
+
   /**
    * Custom constructor that sets MIME type.
    */
   public JsonResponse() {
     super("application/json");
+    this.wrapResponse = true;
   }
 
   /**
@@ -101,16 +111,21 @@ public class JsonResponse extends ResponseFormat<Map> {
    * @param data    The request data map (key => value).
    */
   private void writeJson(STATUS_CODE code, String message, Object data) {
-    Map json = new LinkedHashMap();
-    json.put("status", Integer.toString(code.getCode()));
-    json.put("message", message);
-    
-    if (data != null) {
-      json.put("data", data);
+
+    if(isWrapResponse()){
+      Map json = new LinkedHashMap();
+      json.put("status", Integer.toString(code.getCode()));
+      json.put("message", message);
+
+      if (data != null) {
+        json.put("data", data);
+      }
+      data = json;
     }
-    
-    String jsonData = JSONValue.toJSONString(json);
-    write(code.getHeader(), jsonData);
+    write(code.getHeader(), data != null ? JSONValue.toJSONString(data) : null);
   }
 
+  public boolean isWrapResponse() {
+    return wrapResponse;
+  }
 }

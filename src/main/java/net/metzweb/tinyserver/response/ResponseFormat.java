@@ -158,7 +158,7 @@ public abstract class ResponseFormat<T> {
   /**
    * Set output stream and initialize its writer.
    * 
-   * @param writer 
+   * @param output
    */
   public void setOutputStream(OutputStream output) {
     try {
@@ -179,7 +179,9 @@ public abstract class ResponseFormat<T> {
   protected void write(String code, String data) {
     try {
       writeHeader(code);
-      writer.write(data);
+      if(data != null){
+        writer.write(data);
+      }
       writer.flush();
     } catch (IOException ex) {
       System.out.println("Response format, writer error.");

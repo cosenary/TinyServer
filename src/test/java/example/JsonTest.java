@@ -24,7 +24,7 @@ public class JsonTest {
     server.get("/weather/[location]", new MyCallback());
     
     // set JSON response class
-    server.setResponseFormat(new JsonResponse());
+    server.setResponseFormat(new JsonResponse(false));
     
     // start server
     server.start();
