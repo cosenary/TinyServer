@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -19,6 +22,8 @@ public class Main {
 
     private static ConfigurableApplicationContext appContext;
 
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
     public static void main(String[] args) {
         setAppContext(SpringApplication.run(Main.class));
     }
@@ -27,9 +32,11 @@ public class Main {
     public TinyServer tinyServer(){
         final TinyServer tinyServer = new TinyServer(8200);
         tinyServer.setResponseFormat(new JsonResponse(true));
-        new Thread(() -> {
+
+        // start method holds so this thread will never be freed
+        executorService.submit(() -> {
             tinyServer.start();
-        }).start();
+        });
         return tinyServer;
     }
 

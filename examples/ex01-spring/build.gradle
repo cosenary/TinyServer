@@ -12,6 +12,8 @@ repositories {
     mavenCentral()
 }
 
+mainClassName = 'com.mageddo.tinyserverspring.Main'
+
 dependencies {
 
     compile group: 'net.metzweb', name: 'tinyserver', version: '1.0.0'
