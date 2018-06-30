@@ -17,9 +17,8 @@ public class CustomerController implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-
         server.get("/customers/[id]", request -> {
-            request.write(customerService.findByID(1));
+            request.write(customerService.findByID(Long.parseLong(request.param("id"))));
         });
     }
 }

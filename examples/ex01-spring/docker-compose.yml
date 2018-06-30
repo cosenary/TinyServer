@@ -1,0 +1,7 @@
+#version: '3'
+#services:
+#  app:
+#    image: openjdk:8-jre
+#    command: /app/ex01-spring
+#    volume:
+#      - /app/
