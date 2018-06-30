@@ -1,6 +1,7 @@
 package net.metzweb.tinyserver.response;
 
-import org.json.simple.JSONValue;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.Map;
 public class JsonResponse extends ResponseFormat<Object> {
 
   private boolean wrapResponse;
-
+  private ObjectMapper objectMapper;
 
   public JsonResponse(boolean wrapResponse) {
     this();
@@ -31,6 +32,7 @@ public class JsonResponse extends ResponseFormat<Object> {
   public JsonResponse() {
     super("application/json");
     this.wrapResponse = true;
+    this.objectMapper = new ObjectMapper();
   }
 
   /**
@@ -120,7 +122,11 @@ public class JsonResponse extends ResponseFormat<Object> {
       }
       data = json;
     }
-    write(code.getHeader(), data != null ? JSONValue.toJSONString(data) : null);
+    try {
+      write(code.getHeader(), data != null ? objectMapper.writeValueAsString(data) : null);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public boolean isWrapResponse() {
