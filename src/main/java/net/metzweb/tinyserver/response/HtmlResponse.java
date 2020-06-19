@@ -37,7 +37,7 @@ public class HtmlResponse extends ResponseFormat<String> {
    */
   @Override
   public void success(String data) {
-    write(STATUS_CODE.SUCCESS.getHeader(), data);
+    write(StatusCode.SUCCESS.getHeader(), data);
   }
 
   /**
@@ -50,8 +50,8 @@ public class HtmlResponse extends ResponseFormat<String> {
 
   @Override
   public void forbidden(String message) {
-    String data = String.format(HTML_WRAPPER, "Forbidden", message, STATUS_CODE.FORBIDDEN.getDesc());
-    write(STATUS_CODE.FORBIDDEN.getHeader(), data);
+    String data = String.format(HTML_WRAPPER, "Forbidden", message, StatusCode.FORBIDDEN.getDesc());
+    write(StatusCode.FORBIDDEN.getHeader(), data);
   }
 
   /**
@@ -64,8 +64,8 @@ public class HtmlResponse extends ResponseFormat<String> {
 
   @Override
   public void notFound(String message) {
-    String data = String.format(HTML_WRAPPER, "Not Found", message, STATUS_CODE.NOT_FOUND.getDesc());
-    write(STATUS_CODE.NOT_FOUND.getHeader(), data);
+    String data = String.format(HTML_WRAPPER, "Not Found", message, StatusCode.NOT_FOUND.getDesc());
+    write(StatusCode.NOT_FOUND.getHeader(), data);
   }
 
   /**
@@ -78,8 +78,8 @@ public class HtmlResponse extends ResponseFormat<String> {
 
   @Override
   public void error(String message) {
-    String data = String.format(HTML_WRAPPER, "Internal Server Error", message, STATUS_CODE.ERROR.getDesc());
-    write(STATUS_CODE.ERROR.getHeader(), data);
+    String data = String.format(HTML_WRAPPER, "Internal Server Error", message, StatusCode.ERROR.getDesc());
+    write(StatusCode.ERROR.getHeader(), data);
   }
 
 }

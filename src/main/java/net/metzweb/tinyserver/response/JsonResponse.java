@@ -41,7 +41,7 @@ public class JsonResponse extends ResponseFormat<Object> {
    * @param data List holding JSON entries.
    */
   public void success(List data) {
-    writeJson(STATUS_CODE.SUCCESS, "OK", data);
+    writeJson(StatusCode.SUCCESS, "OK", data);
   }
 
   /**
@@ -51,7 +51,7 @@ public class JsonResponse extends ResponseFormat<Object> {
    */
   @Override
   public void success(Object data) {
-    writeJson(STATUS_CODE.SUCCESS, "OK", data);
+    writeJson(StatusCode.SUCCESS, "OK", data);
   }
 
   /**
@@ -64,7 +64,7 @@ public class JsonResponse extends ResponseFormat<Object> {
 
   @Override
   public void forbidden(String message) {
-    writeJson(STATUS_CODE.FORBIDDEN, message);
+    writeJson(StatusCode.FORBIDDEN, message);
   }
 
   /**
@@ -77,7 +77,7 @@ public class JsonResponse extends ResponseFormat<Object> {
 
   @Override
   public void notFound(String message) {
-    writeJson(STATUS_CODE.NOT_FOUND, message);
+    writeJson(StatusCode.NOT_FOUND, message);
   }
 
   /**
@@ -90,7 +90,7 @@ public class JsonResponse extends ResponseFormat<Object> {
 
   @Override
   public void error(String message) {
-    writeJson(STATUS_CODE.ERROR, message);
+    writeJson(StatusCode.ERROR, message);
   }
 
   /**
@@ -99,7 +99,7 @@ public class JsonResponse extends ResponseFormat<Object> {
    * @param code    The request status code.
    * @param message The request message.
    */
-  private void writeJson(STATUS_CODE code, String message) {
+  private void writeJson(StatusCode code, String message) {
     writeJson(code, message, null);
   }
 
@@ -110,7 +110,7 @@ public class JsonResponse extends ResponseFormat<Object> {
    * @param message The request message.
    * @param data    The request data map (key => value).
    */
-  private void writeJson(STATUS_CODE code, String message, Object data) {
+  private void writeJson(StatusCode code, String message, Object data) {
 
     if(isWrapResponse()){
       Map json = new LinkedHashMap();

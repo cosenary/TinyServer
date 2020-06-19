@@ -32,7 +32,7 @@ public class PlainResponse extends ResponseFormat<String> {
    */
   @Override
   public void success(String data) {
-    write(STATUS_CODE.SUCCESS.getHeader(), data);
+    write(StatusCode.SUCCESS.getHeader(), data);
   }
   
 }

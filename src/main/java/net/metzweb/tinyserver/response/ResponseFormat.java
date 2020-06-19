@@ -48,54 +48,6 @@ public abstract class ResponseFormat<T> {
   }
 
   /**
-   * HTTP status codes.
-   */
-  protected enum STATUS_CODE {
-    SUCCESS(200),
-    FORBIDDEN(403),
-    NOT_FOUND(404),
-    ERROR(500);
-    
-    private int code;
-    
-    private STATUS_CODE(int code) {
-      this.code = code;
-    }
-        
-    public int getCode() {
-      return code;
-    }
-    
-    public String getHeader() {
-      switch (this) {
-        case FORBIDDEN:
-          return "403 Forbidden";
-        case NOT_FOUND:
-          return "404 Not Found";
-        case ERROR:
-          return "500 Internal Server Error";
-        default:
-        case SUCCESS:
-          return "200 OK";
-      }
-    }
-    
-    public String getDesc() {
-      switch (this) {
-        case FORBIDDEN:
-          return "You don't have enough rights to access this resource.";
-        case NOT_FOUND:
-          return "The requested resource wasn't found.";
-        case ERROR:
-          return "An error occured.";
-        default:
-        case SUCCESS:
-          return "Success";
-      }
-    }
-  }
-
-  /**
    * 200 OK.
    * 
    * @param data The data.
@@ -106,33 +58,33 @@ public abstract class ResponseFormat<T> {
    * 403 forbidden.
    */
   public void forbidden() {
-    forbidden(STATUS_CODE.FORBIDDEN.getDesc());
+    forbidden(StatusCode.FORBIDDEN.getDesc());
   }
 
   public void forbidden(String message) {
-    write(STATUS_CODE.FORBIDDEN.getHeader(), message);
+    write(StatusCode.FORBIDDEN.getHeader(), message);
   }
 
   /**
    * 404 not found.
    */
   public void notFound() {
-    notFound(STATUS_CODE.NOT_FOUND.getDesc());
+    notFound(StatusCode.NOT_FOUND.getDesc());
   }
 
   public void notFound(String message) {
-    write(STATUS_CODE.NOT_FOUND.getHeader(), message);
+    write(StatusCode.NOT_FOUND.getHeader(), message);
   }
 
   /**
    * 500 internal server error.
    */
   public void error() {
-    error(STATUS_CODE.ERROR.getDesc());
+    error(StatusCode.ERROR.getDesc());
   }
 
   public void error(String message) {
-    write(STATUS_CODE.ERROR.getHeader(), message);
+    write(StatusCode.ERROR.getHeader(), message);
   }
 
   /**
@@ -168,6 +120,10 @@ public abstract class ResponseFormat<T> {
     }
   }
 
+  public void write(StatusCode code, String data) {
+    this.write(code.getHeader(), data);
+  }
+
   /**
    * Write data string to the open socket.
    * 
@@ -183,6 +139,7 @@ public abstract class ResponseFormat<T> {
       writer.flush();
     } catch (IOException ex) {
       System.out.println("Response format, writer error.");
+      ex.printStackTrace();
     }
   }
 

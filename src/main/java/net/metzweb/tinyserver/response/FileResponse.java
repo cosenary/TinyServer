@@ -61,7 +61,7 @@ public class FileResponse extends ResponseFormat<String> {
     }
     
     setMimeType(MIME_TYPES.get(extension));
-    write(STATUS_CODE.SUCCESS.getHeader(), filePath);
+    write(StatusCode.SUCCESS.getHeader(), filePath);
   }
 
   /**
