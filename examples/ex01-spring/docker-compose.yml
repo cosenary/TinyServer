@@ -1,0 +1,15 @@
+version: '2.2'
+services:
+  tinyserver-spring:
+    image: openjdk:8-jre
+    hostname: "tinyserver-spring.dev"
+    volumes:
+      - ./build/install/ex01-spring:/app
+    working_dir: /app
+    command: /app/bin/ex01-spring
+    cpus: 0.5
+    mem_limit: 100m
+    memswap_limit: 0
+    env_file:
+      - .env
+    network_mode: bridge

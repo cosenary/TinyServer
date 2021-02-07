@@ -334,6 +334,11 @@ curl -X POST -d @hello.txt localhost:8200/file --header "Content-Type:text/plain
 
 - Server port: `new TinyServer(<port>)`
 
+## Installing as dependency
+```
+gradle clean install
+```
+
 ## Issues
 
 Please submit issues through the [issue tracker](https://github.com/cosenary/TinyServer/issues) on GitHub.

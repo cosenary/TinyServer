@@ -1,0 +1,3 @@
+rootProject.name = 'tinyserver'
+
+include ':examples:ex01-spring'

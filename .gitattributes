@@ -1,0 +1,16 @@
+# https://help.github.com/articles/dealing-with-line-endings/
+
+*.bat text eol=crlf
+gradlew text eol=lf
+*.java eol=lf
+*.gradle eol=lf
+*.md eol=lf
+*.txt eol=lf
+*.log eol=lf
+*.xml eol=lf
+*.yml eol=lf
+*.properties eol=lf
+*.sql eol=lf
+.gitignore eol=lf
+.env eol=lf
+.gitattributes eol=lf
